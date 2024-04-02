@@ -44,7 +44,7 @@ def main():
         st.write(df)
         
         # Print list of column names
-        st.write("### Actual Column Names")
+        st.write("### Column Names")
         st.write(df.columns.tolist())
         
         # Create Company Profile pages
