@@ -10,7 +10,7 @@ def load_data_from_github(url):
     return df
 
 # GitHub CSV URL
-github_csv_url = 'Quarterly 4Q2023 Example.xlsx - Sheet1.csv'  # Replace with your GitHub CSV URL
+github_csv_url = 'https://github.com/AndrewBedell10/ASXQ/blob/main/Quarterly%204Q2023%20Example.xlsx%20-%20Sheet1.csv'  # Replace with your GitHub CSV URL
 
 # Load data
 try:
