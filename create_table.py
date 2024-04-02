@@ -12,11 +12,9 @@ def load_data_from_github(url):
         
         # Define custom column names
         custom_column_names = {
-            'Net Cash from / (used in) Operating Activities': 'CFO',
-            'Cash Flows from Operating Activities, Financing Activities, and Investing Activities': 'CFI',
-            'Net Increase / (Decrease) in Cash and Cash Equivalents': 'CFF',
-            'Cash and Cash Equivalents at Beginning of Period': 'Cash Balance',
-            'Cash and Cash Equivalents at End of Period': 'Cash Balance'
+            'CFO': 'Cash from Operations',
+            'CFI': 'Cash from Investing',
+            'CFF': 'Cash from Financing'
         }
         
         # Read CSV content into a DataFrame with custom column names
