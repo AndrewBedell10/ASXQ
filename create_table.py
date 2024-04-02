@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import requests
+import csv
 import io
 
 # Function to fetch data from GitHub CSV file
@@ -10,14 +11,15 @@ def load_data_from_github(url):
         response.raise_for_status()  # Raise an exception for HTTP errors
         content = response.content.decode('utf-8')
         
-        # Try reading the CSV with various parameters to handle potential issues
-        try:
-            df = pd.read_csv(io.StringIO(content))
-        except pd.errors.ParserError:
-            try:
-                df = pd.read_csv(io.StringIO(content), delimiter=';')  # Try semicolon delimiter
-            except pd.errors.ParserError:
-                df = pd.read_csv(io.StringIO(content), engine='c', error_bad_lines=False)  # Skip bad lines
+        # Read CSV content line by line and skip bad lines manually
+        lines = content.split('\n')
+        good_lines = []
+        for line in lines:
+            if len(line.split(',')) == len(lines[0].split(',')):
+                good_lines.append(line)
+        
+        # Read filtered content into a DataFrame
+        df = pd.read_csv(io.StringIO('\n'.join(good_lines)))
         
         return df
     except Exception as e:
