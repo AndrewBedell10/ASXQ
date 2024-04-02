@@ -3,25 +3,15 @@ import pandas as pd
 import requests
 import io
 
-# Function to fetch data from GitHub CSV file with custom column names
+# Function to fetch data from GitHub CSV file
 def load_data_from_github(url):
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for HTTP errors
         content = response.content.decode('utf-8')
         
-        # Define custom column names
-        custom_column_names = {
-            'CFO': 'Cash from Operations',
-            'CFI': 'Cash from Investing',
-            'CFF': 'Cash from Financing'
-        }
-        
-        # Read CSV content into a DataFrame with custom column names
-        df = pd.read_csv(io.StringIO(content), names=custom_column_names.values(), header=0)
-        
-        # Rename the columns to the desired custom names
-        df.rename(columns=custom_column_names, inplace=True)
+        # Read CSV content into a DataFrame
+        df = pd.read_csv(io.StringIO(content))
         
         return df
     except Exception as e:
@@ -35,7 +25,7 @@ github_csv_url = 'https://raw.githubusercontent.com/AndrewBedell10/ASXQ/main/Qua
 def main():
     st.title('Company Data Viewer')
     
-    # Load data from GitHub with custom column names
+    # Load data from GitHub
     df = load_data_from_github(github_csv_url)
     
     if df is not None:
@@ -43,30 +33,22 @@ def main():
         st.write("### Main Table")
         st.write(df)
         
-        # Print list of column names
-        st.write("### Actual Column Names")
-        st.write(df.columns.tolist())
-        
         # Create Company Profile pages
         if 'Company Name' in df.columns:  # Check if the correct column name exists
             unique_companies = df['Company Name'].unique()
             selected_company = st.selectbox('Select Company:', unique_companies)
             
             if selected_company:
-                # Identify correct column name for ticker symbol
-                ticker_column = [col for col in df.columns if 'Ticker' in col]
-                if ticker_column:
-                    ticker = df[df['Company Name'] == selected_company][ticker_column[0]].iloc[0]
-                    profile_title = f"### Company Profile: {selected_company} | {ticker}"
-                    st.write(profile_title)
-                    
-                    # Create Company Table
-                    company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', ticker_column[0]])
-                    company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
-                    
-                    st.write(company_df)
-                else:
-                    st.error("Column for ticker symbol not found in the DataFrame.")
+                # Concatenate Company Name and Ticker
+                ticker = df[df['Company Name'] == selected_company]['Ticker'].iloc[0]
+                profile_title = f"### Company Profile: {selected_company} | {ticker}"
+                st.write(profile_title)
+                
+                # Create Company Table
+                company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', 'Ticker'])
+                company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
+                
+                st.write(company_df)
         else:
             st.error("Column 'Company Name' not found in the DataFrame.")
 
