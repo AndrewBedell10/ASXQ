@@ -19,7 +19,7 @@ def load_data_from_github(url):
         return None
 
 # GitHub CSV URL
-github_csv_url = 'https://raw.githubusercontent.com/AndrewBedell10/ASXQ/main/Quarterly%204Q2023%20Example.csv'  # Replace with your GitHub CSV URL
+github_csv_url = 'https://github.com/AndrewBedell10/ASXQ/blob/main/ASX%20Quarterly%2020234Q_export_20240402.csv'  # Replace with your GitHub CSV URL
 
 # Streamlit app
 def main():
