@@ -12,12 +12,12 @@ def load_data_from_github(url):
         
         # Try reading the CSV with various parameters to handle potential issues
         try:
-            df = pd.read_csv(io.StringIO(content))
+            df = pd.read_csv(io.StringIO(content), engine='python')
         except pd.errors.ParserError:
             try:
                 df = pd.read_csv(io.StringIO(content), delimiter=';')  # Try semicolon delimiter
             except pd.errors.ParserError:
-                df = pd.read_csv(io.StringIO(content), error_bad_lines=False)  # Skip bad lines
+                df = pd.read_csv(io.StringIO(content), delimiter=',', error_bad_lines=False, engine='python')  # Skip bad lines
         
         return df
     except Exception as e:
@@ -41,3 +41,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
