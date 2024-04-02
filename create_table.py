@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import requests
+import io
 
 # Function to fetch data from GitHub CSV file
 def load_data_from_github(url):
