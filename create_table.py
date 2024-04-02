@@ -40,7 +40,7 @@ def main():
             
             if selected_company:
                 # Concatenate Company Name and Ticker
-                ticker = df[df['Company Name'] == selected_company]['Ticker'].iloc[0]
+                ticker = df[df['Company Name'] == selected_company]['ticker'].iloc[0]
                 profile_title = f"### Company Profile: {selected_company} | {ticker}"
                 st.write(profile_title)
                 
