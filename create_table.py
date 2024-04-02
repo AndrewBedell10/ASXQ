@@ -12,12 +12,12 @@ def load_data_from_github(url):
         
         # Try reading the CSV with various parameters to handle potential issues
         try:
-            df = pd.read_csv(io.StringIO(content), engine='python')
+            df = pd.read_csv(io.StringIO(content))
         except pd.errors.ParserError:
             try:
                 df = pd.read_csv(io.StringIO(content), delimiter=';')  # Try semicolon delimiter
             except pd.errors.ParserError:
-                df = pd.read_csv(io.StringIO(content), delimiter=',', error_bad_lines=False, engine='python')  # Skip bad lines
+                df = pd.read_csv(io.StringIO(content), engine='c', error_bad_lines=False)  # Skip bad lines
         
         return df
     except Exception as e:
@@ -25,7 +25,7 @@ def load_data_from_github(url):
         return None
 
 # GitHub CSV URL
-github_csv_url = 'https://github.com/AndrewBedell10/ASXQ/blob/main/Quarterly%204Q2023%20Example.csv'  # Replace with your GitHub CSV URL
+github_csv_url = 'https://raw.githubusercontent.com/AndrewBedell10/ASXQ/main/Quarterly%204Q2023%20Example.csv'  # Replace with your GitHub CSV URL
 
 # Streamlit app
 def main():
@@ -41,4 +41,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
