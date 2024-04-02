@@ -40,12 +40,12 @@ def main():
             
             if selected_company:
                 # Concatenate Company Name and Ticker
-                ticker = df[df['Company Name'] == selected_company]['Ticker'].iloc[0]
+                ticker = df[df['Company Name'] == selected_company]['ticker'].iloc[0]
                 profile_title = f"### Company Profile: {selected_company} | {ticker}"
                 st.write(profile_title)
                 
                 # Create Company Table
-                company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', 'Ticker'])
+                company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', 'ticker'])
                 company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
                 
                 st.write(company_df)
