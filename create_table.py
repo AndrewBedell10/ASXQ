@@ -38,13 +38,7 @@ def main():
             unique_companies = df['Company Name'].unique()
             selected_company = st.selectbox('Select Company:', unique_companies)
             
-            if selected_company:
-                # Concatenate Company Name and Ticker
-                ticker = df[df['Company Name'] == selected_company]['Ticker'].iloc[0]
-                profile_title = f"### Company Profile: {selected_company} | {ticker}"
-                st.write(profile_title)
-                
-                # Create Company Table
+                           # Create Company Table
                 company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', 'Ticker'])
                 company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
                 
