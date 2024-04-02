@@ -3,25 +3,15 @@ import pandas as pd
 import requests
 import io
 
-# Function to fetch data from GitHub CSV file with custom column names
+# Function to fetch data from GitHub CSV file
 def load_data_from_github(url):
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for HTTP errors
         content = response.content.decode('utf-8')
         
-        # Define custom column names
-        custom_column_names = {
-            'CFO': 'Cash from Operations',
-            'CFI': 'Cash from Investing',
-            'CFF': 'Cash from Financing'
-        }
-        
-        # Read CSV content into a DataFrame with custom column names
-        df = pd.read_csv(io.StringIO(content), names=custom_column_names.values(), header=0)
-        
-        # Rename the columns to the desired custom names
-        df.rename(columns=custom_column_names, inplace=True)
+        # Read CSV content into a DataFrame
+        df = pd.read_csv(io.StringIO(content))
         
         return df
     except Exception as e:
@@ -35,7 +25,7 @@ github_csv_url = 'https://raw.githubusercontent.com/AndrewBedell10/ASXQ/main/Qua
 def main():
     st.title('Company Data Viewer')
     
-    # Load data from GitHub with custom column names
+    # Load data from GitHub
     df = load_data_from_github(github_csv_url)
     
     if df is not None:
