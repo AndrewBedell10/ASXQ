@@ -12,7 +12,7 @@ def load_data_from_github(url):
         
         # Define custom column names
         custom_column_names = {
-            'CFO': 'Net Cash from / (used in) Operating Activities',
+            'CFO': 'Cash from Operations',
             'CFI': 'Cash from Investing',
             'CFF': 'Cash from Financing'
         }
@@ -44,7 +44,7 @@ def main():
         st.write(df)
         
         # Print list of column names
-        st.write("### Column Names")
+        st.write("### Actual Column Names")
         st.write(df.columns.tolist())
         
         # Create Company Profile pages
