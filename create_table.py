@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import requests
-import csv
 import io
 
 # Function to fetch data from GitHub CSV file
@@ -11,15 +10,8 @@ def load_data_from_github(url):
         response.raise_for_status()  # Raise an exception for HTTP errors
         content = response.content.decode('utf-8')
         
-        # Read CSV content line by line and skip bad lines manually
-        lines = content.split('\n')
-        good_lines = []
-        for line in lines:
-            if len(line.split(',')) == len(lines[0].split(',')):
-                good_lines.append(line)
-        
-        # Read filtered content into a DataFrame
-        df = pd.read_csv(io.StringIO('\n'.join(good_lines)))
+        # Read CSV content into a DataFrame
+        df = pd.read_csv(io.StringIO(content))
         
         return df
     except Exception as e:
@@ -27,7 +19,7 @@ def load_data_from_github(url):
         return None
 
 # GitHub CSV URL
-github_csv_url = 'https://github.com/AndrewBedell10/ASXQ/blob/main/Quarterly%204Q2023%20Example.csv'  # Replace with your GitHub CSV URL
+github_csv_url = 'https://raw.githubusercontent.com/AndrewBedell10/ASXQ/main/Quarterly%204Q2023%20Example.csv'  # Replace with your GitHub CSV URL
 
 # Streamlit app
 def main():
