@@ -61,4 +61,14 @@ def main():
                     st.write(profile_title)
                     
                     # Create Company Table
-                    company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', ti
+                    company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', ticker_column[0]])
+                    company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
+                    
+                    st.write(company_df)
+                else:
+                    st.error("Column for ticker symbol not found in the DataFrame.")
+        else:
+            st.error("Column 'Company Name' not found in the DataFrame.")
+
+if __name__ == '__main__':
+    main()
