@@ -6,7 +6,7 @@ import requests
 def load_data_from_github(url):
     response = requests.get(url)
     content = response.content.decode('utf-8')
-    df = pd.read_csv(pd.compat.StringIO(content))
+    df = pd.read_csv(io.StringIO(content))
     return df
 
 # GitHub CSV URL
