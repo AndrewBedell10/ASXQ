@@ -44,7 +44,7 @@ def main():
             
             if selected_company:
                 # Identify correct column name for ticker symbol
-                ticker_column = [col for col in df.columns if 'Ticker' in col]
+                ticker_column = [col for col in df.columns if 'ticker' in col]
                 if ticker_column:
                     ticker = df[df['Company Name'] == selected_company][ticker_column[0]].iloc[0]
                     profile_title = f"### Company Profile: {selected_company} | {ticker}"
