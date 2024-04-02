@@ -23,15 +23,28 @@ github_csv_url = 'https://raw.githubusercontent.com/AndrewBedell10/ASXQ/main/Qua
 
 # Streamlit app
 def main():
-    st.title('CSV File Viewer')
+    st.title('Company Data Viewer')
     
     # Load data from GitHub
     df = load_data_from_github(github_csv_url)
     
     if df is not None:
-        # Display DataFrame as table
-        st.write("### Table from CSV File")
+        # Display Main Table
+        st.write("### Main Table")
         st.write(df)
-
+        
+        # Create Company Profile pages
+        unique_companies = df['Company'].unique()
+        selected_company = st.selectbox('Select Company:', unique_companies)
+        
+        if selected_company:
+            st.write(f"### Company Profile: {selected_company}")
+            
+            # Create Company Table
+            company_data = df[df['Company'] == selected_company].squeeze().drop('Company')
+            company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
+            
+            st.write(company_df)
+    
 if __name__ == '__main__':
     main()
