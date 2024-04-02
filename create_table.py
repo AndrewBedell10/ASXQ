@@ -12,7 +12,7 @@ def load_data_from_github(url):
         
         # Define custom column names
         custom_column_names = {
-            'CFO': 'Cash from Operations',
+            'CFO': 'Net Cash from / (used in) Operating Activities',
             'CFI': 'Cash from Investing',
             'CFF': 'Cash from Financing'
         }
