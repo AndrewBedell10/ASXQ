@@ -33,30 +33,22 @@ def main():
         st.write("### Main Table")
         st.write(df)
         
-        # Print list of column names
-        st.write("### Column Names")
-        st.write(df.columns.tolist())
-        
         # Create Company Profile pages
         if 'Company Name' in df.columns:  # Check if the correct column name exists
             unique_companies = df['Company Name'].unique()
             selected_company = st.selectbox('Select Company:', unique_companies)
             
             if selected_company:
-                # Identify correct column name for ticker symbol
-                ticker_column = [col for col in df.columns if 'Ticker' in col]
-                if ticker_column:
-                    ticker = df[df['Company Name'] == selected_company][ticker_column[0]].iloc[0]
-                    profile_title = f"### Company Profile: {selected_company} | {ticker}"
-                    st.write(profile_title)
-                    
-                    # Create Company Table
-                    company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', ticker_column[0]])
-                    company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
-                    
-                    st.write(company_df)
-                else:
-                    st.error("Column for ticker symbol not found in the DataFrame.")
+                # Concatenate Company Name and Ticker
+                ticker = df[df['Company Name'] == selected_company]['Ticker'].iloc[0]
+                profile_title = f"### Company Profile: {selected_company} | {ticker}"
+                st.write(profile_title)
+                
+                # Create Company Table
+                company_data = df[df['Company Name'] == selected_company].squeeze().drop(['Company Name', 'Ticker'])
+                company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
+                
+                st.write(company_df)
         else:
             st.error("Column 'Company Name' not found in the DataFrame.")
 
