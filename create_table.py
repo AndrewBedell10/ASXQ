@@ -34,17 +34,20 @@ def main():
         st.write(df)
         
         # Create Company Profile pages
-        unique_companies = df['Company'].unique()
-        selected_company = st.selectbox('Select Company:', unique_companies)
-        
-        if selected_company:
-            st.write(f"### Company Profile: {selected_company}")
+        if 'Company Name' in df.columns:  # Check if the correct column name exists
+            unique_companies = df['Company Name'].unique()
+            selected_company = st.selectbox('Select Company:', unique_companies)
             
-            # Create Company Table
-            company_data = df[df['Company'] == selected_company].squeeze().drop('Company')
-            company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
-            
-            st.write(company_df)
-    
+            if selected_company:
+                st.write(f"### Company Profile: {selected_company}")
+                
+                # Create Company Table
+                company_data = df[df['Company Name'] == selected_company].squeeze().drop('Company Name')
+                company_df = pd.DataFrame({'Attribute': company_data.index, 'Value': company_data.values})
+                
+                st.write(company_df)
+        else:
+            st.error("Column 'Company Name' not found in the DataFrame.")
+
 if __name__ == '__main__':
     main()
